@@ -5,6 +5,8 @@ VisualStudioVersion = 17.12.35527.113 d17.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorConfirmationModalWebAssembly", "BlazorConfirmationModalWebAssembly\BlazorConfirmationModalWebAssembly.csproj", "{7463038F-28B1-4A15-AD11-008758C4D969}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor_ServerConfirmationModal", "Blazor_ServerConfirmationModal\Blazor_ServerConfirmationModal.csproj", "{E700D331-AFAD-4A17-B420-2FB7758A0763}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{7463038F-28B1-4A15-AD11-008758C4D969}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7463038F-28B1-4A15-AD11-008758C4D969}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7463038F-28B1-4A15-AD11-008758C4D969}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E700D331-AFAD-4A17-B420-2FB7758A0763}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E700D331-AFAD-4A17-B420-2FB7758A0763}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E700D331-AFAD-4A17-B420-2FB7758A0763}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E700D331-AFAD-4A17-B420-2FB7758A0763}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
