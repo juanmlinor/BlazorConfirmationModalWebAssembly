@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorConfirmationModalWebA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor_ServerConfirmationModal", "Blazor_ServerConfirmationModal\Blazor_ServerConfirmationModal.csproj", "{E700D331-AFAD-4A17-B420-2FB7758A0763}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazoredModal_Server", "BlazoredModal_Server\BlazoredModal_Server.csproj", "{64AEEA85-858B-4E65-A8F9-CC7A6A43CEAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{E700D331-AFAD-4A17-B420-2FB7758A0763}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E700D331-AFAD-4A17-B420-2FB7758A0763}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E700D331-AFAD-4A17-B420-2FB7758A0763}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64AEEA85-858B-4E65-A8F9-CC7A6A43CEAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64AEEA85-858B-4E65-A8F9-CC7A6A43CEAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64AEEA85-858B-4E65-A8F9-CC7A6A43CEAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64AEEA85-858B-4E65-A8F9-CC7A6A43CEAE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

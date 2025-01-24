@@ -1,0 +1,216 @@
+﻿@page "/categories"
+@using BlazoredModal_Server.Models
+
+<div class="card">
+    <div class="card-header">
+        <span>
+            <i class="bi bi-list-check"></i> Categorias
+            <a class="btn btn-sm btn-primary float-end" @onclick=@(() => ShowModalAsync())><i class="bi bi-plus-circle" /> Adicionar Categoría</a>
+        </span>
+    </div>
+    <div class="card-body">
+        @* <Filter PlaceHolder="Buscar categoría..." Callback=@FilterCallBack /> *@
+        <GenericList MyList="Categories">
+            <Body>
+                @* <Pagination CurrentPage="currentPage"
+                            TotalPages="totalPages"
+                            SelectedPage="SelectedPageAsync" 
+                            RecordsNumber="SelectedRecordsNumberAsync" /> *@
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Categoría</th>
+                            <th style="width:168px"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var category in Categories!)
+                        {
+                            <tr>
+                                <td>@category.Name</td>
+                                <td>
+                                    <a @onclick=@(() => ShowModalAsync(category.Id, true)) class="btn btn-sm btn-warning"><i class="bi bi-pencil" /> Editar</a>
+                                    <button @onclick=@(() => DeleteAsync(category)) class="btn btn-sm btn-danger"><i class="bi bi-trash" /> Borrar</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </Body>
+        </GenericList>
+    </div>
+</div>
+@code {
+    // private int currentPage = 1;
+    // private int totalPages;
+
+    // [Inject] private IRepository Repository { get; set; } = null!;
+    [Inject] private SweetAlertService SweetAlertService { get; set; } = null!;
+    [Inject] private NavigationManager NavigationManager { get; set; } = null!;
+
+    [Parameter, SupplyParameterFromQuery] public string Page { get; set; } = string.Empty;
+    [Parameter, SupplyParameterFromQuery] public string Filter { get; set; } = string.Empty;
+    [Parameter, SupplyParameterFromQuery] public int RecordsNumber { get; set; } = 10;
+    [CascadingParameter] IModalService Modal { get; set; } = default!;
+
+    public List<Category>? Categories { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAsync();
+    }
+
+    //Este metooodo llama a ambos modales el Create y elEdit
+    private async Task ShowModalAsync(int id = 0, bool isEdit = false)//Por defecto es 0 y false si no viene nada
+    
+    {
+        IModalReference modalReference;
+
+        if (isEdit)
+        {
+            modalReference = Modal.Show<CategoryEdit>(string.Empty, new ModalParameters().Add("Id", id));
+        }
+        else
+        {
+            modalReference = Modal.Show<CategoriesCreate>();
+        }
+
+        var result = await modalReference.Result;
+        if (result.Confirmed)
+        {
+            await LoadAsync();
+        }
+    }
+
+    // private async Task SelectedRecordsNumberAsync(int recordsnumber)
+    // {
+    //     RecordsNumber = recordsnumber;
+    //     int page = 1;
+    //     await LoadAsync(page);
+    //     await SelectedPageAsync(page);
+    // }
+    // private async Task FilterCallBack(string filter)
+    // {
+    //     Filter = filter;
+    //     await ApplyFilterAsync();
+    //     StateHasChanged();
+    // }
+
+    // private async Task SelectedPageAsync(int page)
+    // {
+    //     if (!string.IsNullOrWhiteSpace(Page))
+    //     {
+    //         page = Convert.ToInt32(Page);
+    //     }
+
+    //     currentPage = page;
+    //     await LoadAsync(page);
+    // }
+
+    private async Task LoadAsync(int page = 1)
+    {
+        var ok = await LoadListAsync(page);
+        if (ok)
+        {
+            // await LoadPagesAsync();
+        }
+    }
+
+    private async Task<bool> LoadListAsync(int page)
+    {
+       // ValidateRecordsNumber();
+        var url = $"api/categories/?page={page}&recordsnumber={RecordsNumber}";
+        // if (!string.IsNullOrEmpty(Filter))
+        // {
+        //     url += $"&filter={Filter}";
+        // }
+
+        // var responseHttp = await Repository.GetAsync<List<Category>>(url);
+        // if (responseHttp.Error)
+        // {
+        //     var message = await responseHttp.GetErrorMessageAsync();
+        //     await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+        //     return false;
+        // }
+        // Categories = responseHttp.Response;
+        return true;
+    }
+
+    // private async Task LoadPagesAsync()
+    // {
+    //     ValidateRecordsNumber();
+    //     var url = $"api/categories/totalPages?recordsnumber={RecordsNumber}";
+    //     if (!string.IsNullOrEmpty(Filter))
+    //     {
+    //         url += $"&filter={Filter}";
+    //     }
+
+    //     var responseHttp = await Repository.GetAsync<int>(url);
+    //     if (responseHttp.Error)
+    //     {
+    //         var message = await responseHttp.GetErrorMessageAsync();
+    //         await SweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+    //         return;
+    //     }
+    //     totalPages = responseHttp.Response;
+    // }
+
+    private void ValidateRecordsNumber()
+    {
+        if (RecordsNumber == 0)
+        {
+            RecordsNumber = 10;
+        }
+    }
+
+    private async Task ApplyFilterAsync()
+    {
+        int page = 1;
+        await LoadAsync(page);
+        // await SelectedPageAsync(page);
+    }
+
+    private async Task DeleteAsync(Category category)
+    {
+        var result = await SweetAlertService.FireAsync(new SweetAlertOptions
+            {
+                Title = "Confirmación",
+                Text = $"¿Estas seguro de querer borrar la categoría: {category.Name}?",
+                Icon = SweetAlertIcon.Question,
+                ShowCancelButton = true,
+            });
+        var confirm = string.IsNullOrEmpty(result.Value);
+        if (confirm)
+        {
+            return;
+        }
+
+        // var responseHttp = await Repository.DeleteAsync<Category>($"api/categories/{category.Id}");
+        // if (responseHttp.Error)
+        // {
+        //     if (responseHttp.HttpResponseMessage.StatusCode == HttpStatusCode.NotFound)
+        //     {
+        //         NavigationManager.NavigateTo("/categories");
+        //     }
+        //     else
+        //     {
+        //         var mensajeError = await responseHttp.GetErrorMessageAsync();
+        //         await SweetAlertService.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
+        //     }
+        //     return;
+        // }
+
+        await LoadAsync();
+        var toast = SweetAlertService.Mixin(new SweetAlertOptions
+            {
+                Toast = true,
+                Position = SweetAlertPosition.BottomEnd,
+                ShowConfirmButton = true,
+                Timer = 3000
+            });
+        await toast.FireAsync(icon: SweetAlertIcon.Success, message: "Registro borrado con éxito.");
+    }
+}
+
+

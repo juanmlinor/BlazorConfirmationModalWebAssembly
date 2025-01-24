@@ -1,0 +1,17 @@
+﻿
+  ﻿<CascadingBlazoredModal Position="ModalPosition.Middle" 
+                        Size="ModalSize.Large" 
+                        HideHeader="true" 
+                        DisableBackgroundCancel="true" 
+                        AnimationType="ModalAnimationType.FadeInOut">
+              
+
+        <Router AppAssembly="typeof(Program).Assembly">
+            <Found Context="routeData">
+                <RouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)" />
+                <FocusOnNavigate RouteData="routeData" Selector="h1" />
+            </Found>
+        </Router>
+
+
+</CascadingBlazoredModal>
